@@ -1,0 +1,28 @@
+name: React CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: pnpm ci
+
+      - name: Run ESLint
+        run: pnpm lint
+
+      - name: Build App
+        run: pnpm build
